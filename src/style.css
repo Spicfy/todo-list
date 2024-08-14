@@ -6,4 +6,114 @@
 body{
     font-family: 'Roboto'; 
     font-size: 22px;
+    display: flex;
+    background-color: #f1f1f1;
+
+}
+#content{
+    flex: 1;
+    padding: 20px;
+    box-sizing: border-box;
+    background-color: white;
+    height: auto;
+}
+.today{
+    display: flex;
+    justify-content: center;
+    align-items: space-between;
+}
+
+.side-bar{
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #f1f1f1;
+    width: 400px;
+    min-height: 100vh;
+    flex-shrink: 0;
+}
+
+.view img{
+    width: 20px;
+    margin-left: 10px;
+}
+
+
+.top{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 30px;
+}
+.view{
+    border: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100px;
+}
+#today img{
+    width: 20px;
+    margin-right: 35px;
+}
+
+.view span{
+    padding: 10px;
+    margin: 10px;
+    font-size: 20px;
+    cursor: pointer;
+    vertical-align: middle;
+}
+#today span{
+    position: relative;
+    left: -35px;
+}
+.add-btn{
+   display: flex;
+    justify-content: center;
+    align-items: center;
+    gap : 10px; 
+}
+
+#add-task-form{
+    flex-direction: column;
+    max-width: 100%;
+    gap: 10px;
+    max-width: 350px;
+    padding: 20px;
+    border: 1px solid #374151;
+    border-radius: 10px;
+    height: 350px;
+    width: 800px;
+}
+.task-item{
+    width: 500px;
+    height: auto;
+    padding: 10px;
+    box-sizing: border-box;
+    overflow: hidden;
+    white-space: normal;
+    text-overflow: ellipsis;
+    max-width: 100%;
+    margin: 10px 0;
+}
+.priority-color{
+    height: 25px;
+    width: 25px;
+    border-radius: 50%;
+    display: inline-block;
+}
+.description{
+    font-size: 16px;
+}
+#submit{
+    border-radius: 12px;
+    background-color: greenyellow;
+}
+
+#cancel{
+    border-radius: 12px;
+    background-color: red;
 }
