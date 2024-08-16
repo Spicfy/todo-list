@@ -1,8 +1,10 @@
 import add from './images/add.svg';
 import { Todo } from './todos';
+import {saveTasks,loadTasks, deleteTask} from './localstorage'; 
+import {renderTask} from './render';
 
+let tasksArray = [];
 function loadToday() {
-    let tasksArray = [];
     const content = document.getElementById('content');
     const today = document.createElement('div');
     const addBtn = document.createElement('button');
@@ -14,10 +16,10 @@ function loadToday() {
     addBtn.appendChild(addBtnDiv);
     addBtn.appendChild(addBtnImg);
     addBtn.classList.add('add-btn');
-    content.appendChild(addBtn);
+    today.appendChild(addBtn);
     const addTask = document.createElement('form');
     today.classList.add('today');
-
+    document.body.appendChild(today);
     addTask.style.display = 'none';
     addTask.setAttribute('id', 'add-task-form');
     addTask.innerHTML = `
@@ -25,7 +27,7 @@ function loadToday() {
         <input type="text" id="task-title" name="taskTitle" placeholder="Task title" required>
 
         <label for="task-description">Task description:</label>
-        <textarea id="description" name="description" placeholder="Enter task description" rows="30" cols="50"></textarea>
+        <textarea id="description" name="description" placeholder="Enter task description" rows="10" cols="50"></textarea>
         
         <label for="task-date">Due date:</label>
         <input type="date" id="task-date" name="taskDate" required>
@@ -43,71 +45,60 @@ function loadToday() {
 
 
 
-    today.appendChild(addTask);
-    content.appendChild(today);
+    content.appendChild(addTask);
+  
     const cancel = document.getElementById('cancel');
     cancel.addEventListener('click', () =>{
         addTask.style.display = 'none';
+        const tasks = document.querySelectorAll('.task-item');
+        tasks.forEach(task => task.style.display = 'flex');
+        addBtn.style.display = 'flex';
     })
 
     addBtn.addEventListener('click', () => {
         addTask.style.display = 'flex';
+        addBtn.style.display = 'none';
+        const tasks = document.querySelectorAll('.task-item');
+        tasks.forEach(task => task.style.display = 'none');
+   
     });
 
     addTask.addEventListener('submit', (e) => {
         e.preventDefault();
+
+      
 
         const title = document.getElementById('task-title').value;
         const description = document.getElementById('description').value;
         const dueDate = document.getElementById('task-date').value;
         const priority = document.getElementById('priority').value;
 
+        const duplicateTask = tasksArray.find(task => task.title.toLowerCase() === title.toLowerCase());
+
+        if(duplicateTask){
+            alert('Task with the same title already exists');
+            return;
+        }
+
         const newTodo = new Todo(title, description, dueDate, priority);
         tasksArray.push(newTodo);
 
-        // Render the new task only
-        const taskItem = document.createElement('div');
-        taskItem.classList.add('task-item');
+        saveTasks(newTodo);
 
-        taskItem.innerHTML = `
-            <h3>${newTodo.title}</h3>
-            <p class="description" style="display:none">${newTodo.description}</p>
-            <p>Due date: ${newTodo.dueDate}</p>
-            <button class="complete-btn">Complete</button>
-            <button class="delete-btn">Delete</button>
-        `;
+        renderTask(newTodo, content, tasksArray);
 
-        const completeBtn = taskItem.querySelector('.complete-btn');
-        const deleteBtn = taskItem.querySelector('.delete-btn');
+        addTask.style.display = 'none';
+        addBtn.style.display = 'flex';
+        const tasks = document.querySelectorAll('.task-item');
+        tasksArray.forEach(task => task.style.display = 'block');
 
-        completeBtn.addEventListener('click', () => {
-            taskItem.classList.toggle('completed');
-        });
-
-        deleteBtn.addEventListener('click', () => {
-            // Remove task from the array and re-render the task list
-            tasksArray = tasksArray.filter(task => task !== newTodo);
-            taskItem.remove(); // Remove the task from the DOM
-        });
-
-        const priorityColor = document.createElement('div');
-        priorityColor.classList.add('priority-color');
-
-        switch (newTodo.priority) {
-            case 'low':
-                taskItem.style.backgroundColor = 'green';
-                break;
-            case 'medium':
-                taskItem.style.backgroundColor = 'orange';
-                break;
-            case 'high':
-                taskItem.style.backgroundColor = 'red';
-                break;
-        }
-        taskItem.appendChild(priorityColor);
-
-        content.insertBefore(taskItem, addBtn);
     });
+
+    tasksArray.forEach(task => {
+        renderTask(task, content);
+    })
+
+       
 }
 
 export default loadToday;

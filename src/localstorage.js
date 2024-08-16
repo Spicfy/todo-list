@@ -1,8 +1,18 @@
 
 
-export function saveTasks(){
+export function saveTasks(tasks){
+    localStorage.setItem(tasks.title, JSON.stringify(tasks));
+ 
+}
+export function loadTasks(){
     let tasks = [];
-    taskList.querySelectorAll('.task-item').forEach(function(item){
-        
-    })
+    for(let i = 0; i < localStorage.length; i++){
+        let key = localStorage.key(i);
+        let task = JSON.parse(localStorage.getItem(key));
+        tasks.push(task);
+    }
+}
+
+export function deleteTask(task){
+    localStorage.removeItem(task.title);
 }
