@@ -33,18 +33,3 @@ class Todo{
 export{Todo};
 
 
-/*render() {
-    // code inside the render function
-
-    const content = document.getElementById('content');
-    const taskItem = document.createElement('div');
-    taskItem.innerHTML = `
-    <h3>${this.title}</h3>
-    <p>${this.description}</p>
-    <p>${this.dueDate}</p>
-    <p>${this.priority}</p>
-
-    <button class="complete-btn" onclick="this.toggleComplete()">Complete</button>
-
-    `;
-};*/

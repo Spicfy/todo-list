@@ -1,18 +1,19 @@
 
 
 export function saveTasks(tasks){
-    localStorage.setItem(tasks.title, JSON.stringify(tasks));
+    localStorage.setItem('tasks', JSON.stringify(tasks));
  
 }
 export function loadTasks(){
-    let tasks = [];
-    for(let i = 0; i < localStorage.length; i++){
-        let key = localStorage.key(i);
-        let task = JSON.parse(localStorage.getItem(key));
-        tasks.push(task);
+    let tasks = localStorage.getItem('tasks');
+    if(!tasks){
+        return [];
     }
+    return JSON.parse(tasks);
 }
 
-export function deleteTask(task){
-    localStorage.removeItem(task.title);
+export function deleteTask(taskTitle){
+    let tasks = loadTasks();
+    tasks = tasks.filter(task => task.title !== taskTitle );
+    saveTasks(tasks);
 }

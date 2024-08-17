@@ -3,9 +3,16 @@ import { Todo } from './todos';
 import {saveTasks,loadTasks, deleteTask} from './localstorage'; 
 import {renderTask} from './render';
 
-let tasksArray = [];
 function loadToday() {
+
+    let tasksArray = loadTasks();
+    
     const content = document.getElementById('content');
+    tasksArray.forEach(task => {
+        renderTask(task, content, tasksArray);
+    })
+
+
     const today = document.createElement('div');
     const addBtn = document.createElement('button');
     const addBtnImg = document.createElement('img');
@@ -13,10 +20,14 @@ function loadToday() {
     addBtnImg.alt = 'add';
     const addBtnDiv = document.createElement('span');
     addBtnDiv.textContent = 'Add Task';
-    addBtn.appendChild(addBtnDiv);
     addBtn.appendChild(addBtnImg);
+    addBtn.appendChild(addBtnDiv);
+    
     addBtn.classList.add('add-btn');
-    today.appendChild(addBtn);
+    const sidebar = document.querySelector('.top');
+    sidebar.appendChild(addBtn);
+    addBtn.classList.add('view');
+
     const addTask = document.createElement('form');
     today.classList.add('today');
     document.body.appendChild(today);
@@ -51,7 +62,7 @@ function loadToday() {
     cancel.addEventListener('click', () =>{
         addTask.style.display = 'none';
         const tasks = document.querySelectorAll('.task-item');
-        tasks.forEach(task => task.style.display = 'flex');
+        tasks.forEach(task => task.style.display = 'block');
         addBtn.style.display = 'flex';
     })
 
@@ -73,9 +84,8 @@ function loadToday() {
         const dueDate = document.getElementById('task-date').value;
         const priority = document.getElementById('priority').value;
 
-        const duplicateTask = tasksArray.find(task => task.title.toLowerCase() === title.toLowerCase());
-
-        if(duplicateTask){
+        const duplicate = tasksArray.find(task => task.title === title);
+        if(duplicate){
             alert('Task with the same title already exists');
             return;
         }
@@ -83,20 +93,18 @@ function loadToday() {
         const newTodo = new Todo(title, description, dueDate, priority);
         tasksArray.push(newTodo);
 
-        saveTasks(newTodo);
+        saveTasks(tasksArray);
 
         renderTask(newTodo, content, tasksArray);
 
         addTask.style.display = 'none';
         addBtn.style.display = 'flex';
         const tasks = document.querySelectorAll('.task-item');
-        tasksArray.forEach(task => task.style.display = 'block');
+        tasks.forEach(task => task.style.display = 'block');
 
     });
 
-    tasksArray.forEach(task => {
-        renderTask(task, content);
-    })
+  
 
        
 }
