@@ -10,8 +10,7 @@ function loadToday() {
     let tasksArray = loadTasks();
 
     tasksArray.forEach(task => {
-        console.log(task.dueDate);
-        console.log(new Date().toISOString().split('T')[0] === task.dueDate);
+        console.log(task.completed);
     });
     console.log(new Date().toISOString().split('T')[0]);
     
@@ -56,8 +55,6 @@ function loadToday() {
     const cancel = document.getElementById('cancel');
     cancel.addEventListener('click', () =>{
         addTask.style.display = 'none';
-        const tasks = document.querySelectorAll('.task-item');
-        tasks.forEach(task => task.style.display = 'block');
         addBtn.style.display = 'flex';
     })
 

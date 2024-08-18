@@ -8,7 +8,7 @@ export function renderTask(task, container, tasksArray) {
         <h3>${task.title}</h3>
         <p class="description" style="display:none">${task.description}</p>
         <p>Due date: ${task.dueDate}</p>
-        <button class="complete-btn taskBtn">Complete</button>
+        <button class="complete-btn taskBtn">${task.completed ? "remove completed": "Complete"}</button>
         <button class="delete-btn taskBtn">Delete</button>
         <button class="descriptionB taskBtn">Description</button>
     `;
@@ -35,7 +35,15 @@ export function renderTask(task, container, tasksArray) {
 
 
     completeBtn.addEventListener('click', () => {
-        taskItem.classList.toggle('completed');
+        task.completed = !task.completed;  // Toggle the completed status
+        completeBtn.textContent = task.completed ? "Remove Completed" : "Complete";  // Update the button text
+
+        // Optionally, you can add a visual cue to indicate the task is completed, like adding a strikethrough:
+        if (task.completed) {
+            taskItem.style.textDecoration = 'line-through';
+        } else {
+            taskItem.style.textDecoration = 'none';
+        }
     });
 
     deleteBtn.addEventListener('click', () => {
