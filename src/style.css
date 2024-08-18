@@ -11,16 +11,14 @@ body{
 
 }
 #content{
-    flex: 1;
     padding: 20px;
     box-sizing: border-box;
     background-color: white;
     height: auto;
     display: grid;
-
     grid-template-columns: repeat(3, 1fr);
-
-    gap: 0;
+    grid-template-rows: 150px 150px 150px 150px 150px;
+    gap: 20px;
 }
 .today{
     display: flex;
@@ -85,19 +83,26 @@ body{
     display: flex;
     justify-content: center;
     align-items: center;
+    border: none;
+    font-size: 20px;
+    margin-right: 25px;
+    cursor: pointer;
+}
+.add-btn > *{
+    margin: 10px;
 }
 
 #add-task-form{
     flex-direction: column;
-    max-width: 100%;
     gap: 10px;
     padding: 20px;
     border: 1px solid #374151;
     border-radius: 10px;
-    max-width: 800px;
+    max-width: 400px;
     height: auto;
-    max-height: 500px;
     margin-left: 300px;
+    margin-top: 100px;
+    
    
 }
 .task-item{
@@ -146,4 +151,8 @@ body{
 .taskBtn:hover{
     background-color: #64748b;
     cursor: pointer;
+}
+#form-container{
+    width: 100%;
+    background: white;
 }

@@ -1,37 +1,33 @@
-import add from './images/add.svg';
+
 import { Todo } from './todos';
 import {saveTasks,loadTasks, deleteTask} from './localstorage'; 
 import {renderTask} from './render';
+import { getTodayTasks } from './filter';
+import { displayToday, displayCompleted, displayUpcoming } from './displayToday';
 
 function loadToday() {
 
     let tasksArray = loadTasks();
+
+    tasksArray.forEach(task => {
+        console.log(task.dueDate);
+        console.log(new Date().toISOString().split('T')[0] === task.dueDate);
+    });
+    console.log(new Date().toISOString().split('T')[0]);
     
     const content = document.getElementById('content');
-    tasksArray.forEach(task => {
-        renderTask(task, content, tasksArray);
-    })
+
 
 
     const today = document.createElement('div');
-    const addBtn = document.createElement('button');
-    const addBtnImg = document.createElement('img');
-    addBtnImg.src = add;
-    addBtnImg.alt = 'add';
-    const addBtnDiv = document.createElement('span');
-    addBtnDiv.textContent = 'Add Task';
-    addBtn.appendChild(addBtnImg);
-    addBtn.appendChild(addBtnDiv);
     
-    addBtn.classList.add('add-btn');
-    const sidebar = document.querySelector('.top');
-    sidebar.appendChild(addBtn);
-    addBtn.classList.add('view');
 
     const addTask = document.createElement('form');
     today.classList.add('today');
     document.body.appendChild(today);
     addTask.style.display = 'none';
+    const addBtn = document.getElementById('add-btn');
+    addBtn.classList.add('view');
     addTask.setAttribute('id', 'add-task-form');
     addTask.innerHTML = `
         <label for="task-title">Task title:</label>
@@ -54,9 +50,8 @@ function loadToday() {
         <button type="button" id="cancel">cancel </button>
     `;
 
-
-
-    content.appendChild(addTask);
+    const formContainer = document.getElementById('form-container');
+    formContainer.appendChild(addTask);
   
     const cancel = document.getElementById('cancel');
     cancel.addEventListener('click', () =>{
@@ -68,7 +63,6 @@ function loadToday() {
 
     addBtn.addEventListener('click', () => {
         addTask.style.display = 'flex';
-        addBtn.style.display = 'none';
         const tasks = document.querySelectorAll('.task-item');
         tasks.forEach(task => task.style.display = 'none');
    
@@ -95,14 +89,25 @@ function loadToday() {
 
         saveTasks(tasksArray);
 
-        renderTask(newTodo, content, tasksArray);
+        
 
         addTask.style.display = 'none';
-        addBtn.style.display = 'flex';
-        const tasks = document.querySelectorAll('.task-item');
-        tasks.forEach(task => task.style.display = 'block');
+
 
     });
+
+    const todayTasks = document.getElementById('today');
+    todayTasks.addEventListener('click', () =>{
+        displayToday();
+    })
+    const upcoming = document.getElementById('upcoming');
+    upcoming.addEventListener('click', () =>{
+        displayUpcoming();
+    })
+    const completed = document.getElementById('completed');
+    completed.addEventListener('click', () =>{
+        displayCompleted();
+    })
 
   
 

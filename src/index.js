@@ -3,6 +3,8 @@ import loadToday from './today';
 import calender from './images/calender_Month.svg';
 import tday from './images/today.svg';
 import event from './images/event_completed.svg';
+import add from './images/add.svg';
+import displayToday from './displayToday';
 
 
 function createTabs() {
@@ -40,25 +42,26 @@ function createTabs() {
     completedDiv.textContent = 'Completed';
     completed.appendChild(completedIcon);
     completed.appendChild(completedDiv);
+
+    const addBtn =  document.querySelector('.add-btn');
+    const addBtnImg = document.createElement('img');
+    addBtnImg.src = add;
+    addBtnImg.alt = 'add';
+    const addBtnDiv = document.createElement('span');
+    addBtnDiv.textContent = 'Add Task';
+    addBtn.appendChild(addBtnImg);
+    addBtn.appendChild(addBtnDiv);
+    
+    addBtn.classList.add('add-btn');
+    addBtn.classList.add('view');
+
     const inbox = document.getElementById('inbox');
     const projects = document.getElementById('new-projects');
 }
 
-function loadTabs() {
-    const today = document.getElementById('today');
-    today.addEventListener('click', () => {
-        loadToday();
-    });
-    const upcoming = document.getElementById('upcoming');
-    upcoming.addEventListener('click', () => {
-        loadToday();
-    });
-    const completed = document.getElementById('completed');
-    completed.addEventListener('click', () => {
-        loadToday();
-    });
-}
+
 
 createTabs();
-
 loadToday();
+
+

@@ -1,6 +1,6 @@
 import {deleteTask} from './localstorage';
 
-export  function renderTask(task, container, tasksArray) {
+export function renderTask(task, container, tasksArray) {
     const taskItem = document.createElement('div');
     taskItem.classList.add('task-item');
 
@@ -12,7 +12,6 @@ export  function renderTask(task, container, tasksArray) {
         <button class="delete-btn taskBtn">Delete</button>
         <button class="descriptionB taskBtn">Description</button>
     `;
-    const todayDate = new Date();
     
     
 
@@ -66,7 +65,6 @@ export  function renderTask(task, container, tasksArray) {
 
 
 }
-
 
 
 
