@@ -10,9 +10,11 @@ function loadToday() {
     let tasksArray = loadTasks();
 
     tasksArray.forEach(task => {
-        console.log(task.completed);
+        if(task.dueDate < new Date().toISOString().split('T')[0] && !task.completed){
+            deleteTask(task);
+        }
     });
-    console.log(new Date().toISOString().split('T')[0]);
+
     
     const content = document.getElementById('content');
 
@@ -104,6 +106,7 @@ function loadToday() {
     const completed = document.getElementById('completed');
     completed.addEventListener('click', () =>{
         displayCompleted();
+        console.log('completed clicked');
     })
 
   

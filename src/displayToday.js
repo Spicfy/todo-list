@@ -8,8 +8,9 @@ export function displayToday(){
     allTasks.forEach(task => task.style.display = 'none');
     let tasksArray = loadTasks();
     const todaysTasks = getTodayTasks(tasksArray);
-
+    
     todaysTasks.forEach(task => {
+        console.log('were here today');
         renderTask(task, content, todaysTasks);
     })
 }
